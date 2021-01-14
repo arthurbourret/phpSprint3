@@ -28,6 +28,31 @@ class Article extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getMesArticles($theme, $etat, $log)
+	{
+		$theme = filter_var($theme, FILTER_SANITIZE_STRING);
+		$etat = filter_var($etat, FILTER_SANITIZE_STRING);
+
+		if ($etat == 'all' && $theme == 'all') { // si etat et theme = all
+			$query = $this->db->query(
+				"SELECT * FROM Article WHERE auteur = ?", array($log));
+		}
+		if ($etat == 'all' && !($theme == 'all')) { // si etat = all
+			$query = $this->db->query(
+				"SELECT * FROM Article WHERE auteur = ? AND theme = ? ", array($log, $theme));
+		}
+		if (!($etat == 'all') && $theme == 'all') { // si theme = all
+			$query = $this->db->query(
+				"SELECT * FROM Article WHERE auteur = ? AND etat_Publi = ? ", array($log, $etat));
+		}
+		if (!($etat == 'all') && !($theme == 'all')) {
+			$query = $this->db->query(
+				"SELECT * FROM Article WHERE auteur =? AND etat_Publi = ? AND theme = ? ", array($log, $etat, $theme));
+		}
+
+		return $query->result_array();
+	}
+
 	public function getArticle($ref)
 	{
 		$sql = 'SELECT * FROM Article WHERE ref_Article = ?';
