@@ -8,7 +8,7 @@ define('BASE_URL', base_url()) // lien de la base de l'application
 <html lang="fr">
 <head>
 	<meta charset="utf-8">
-	<title><?= $titre ?></title>
+	<title><?php $titre ?></title>
 	<link rel="stylesheet" href="<?php echo BASE_URL; ?>css/styleAccueil.css" type="text/css">
 	<link rel="stylesheet" href="<?php echo BASE_URL; ?>css/stylesheet.css" type="text/css">
 	<link rel="stylesheet" href="<?php echo BASE_URL; ?>css/styleConnexion.css" type="text/css">

@@ -1,4 +1,4 @@
-<form method="post" action="Accueil.php">
+<form method="post" action="<?php echo BASE_URL; ?>">
 	<select name="theme" size="1" >
 		<option value="all">Tout les thèmes
 		<option value="sport">Sport
