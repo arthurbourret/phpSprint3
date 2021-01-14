@@ -37,17 +37,31 @@ class Article extends CI_Model
 
 	public function deleteArticle($ref)
 	{
+		$ref = filter_var($ref, FILTER_SANITIZE_STRING);
 
+		$sql = 'DELETE FROM Article WHERE ref_Article = ?';
+		$this->db->query($sql, array($ref));
 	}
 
 	public function setEtatArticle($etat, $ref)
 	{
-		echo $ref;
 		$etat = filter_var($etat, FILTER_SANITIZE_STRING);
 		$ref = filter_var($ref, FILTER_SANITIZE_STRING);
-		echo $ref;
 
 		$sql = 'UPDATE Article SET etat_Publi = ? WHERE ref_Article = ?';
 		$this->db->query($sql, array($etat, $ref));
+	}
+
+	public function addArticle($titre, $theme, $resume, $text, $auteur, $etat)
+	{
+		$titre = filter_var($titre, FILTER_SANITIZE_STRING);
+		$theme = filter_var($theme, FILTER_SANITIZE_STRING);
+		$resume = filter_var($resume, FILTER_SANITIZE_STRING);
+		$text = filter_var($text, FILTER_SANITIZE_STRING);
+		$auteur = filter_var($auteur, FILTER_SANITIZE_STRING);
+		$etat = filter_var($etat, FILTER_SANITIZE_STRING);
+
+		$sql = "INSERT INTO Article (`titre`, `theme`, `resume`, `text`, `auteur`, `etat_Publi`) VALUES (?, ?, ?, ?, ?, ?)";
+		$this->db->query($sql, array($titre, $theme, $resume, $text, $auteur, $etat));
 	}
 }

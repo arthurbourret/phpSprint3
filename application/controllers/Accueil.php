@@ -28,7 +28,7 @@ class Accueil extends CI_Controller
 		$this->load->view('footer'); // bas de page
 	}
 
-	public function set_data()
+	private function set_data()
 	{
 		session_start(); // session
 		$this->load->model('article'); // la database
@@ -62,6 +62,9 @@ class Accueil extends CI_Controller
 	{
 		$this->load->model('article'); // charge model
 		$this->article->deleteArticle($ref_Article);
+
+		$this->load->helper('url');
+		header('Location: ' . base_url()); // revient a la page
 	}
 
 	public function publierArticle($ref_Article)
