@@ -11,8 +11,6 @@ class Accueil extends CI_Controller
 	 */
 	public function index()
 	{
-		$data['titre'] = "Blog groupe 3"; // nom de la page
-
 		$this->load->model('data_request'); // la database
 
 		if (!isset($_POST['theme'])) // le theme des articles a charger
@@ -23,7 +21,34 @@ class Accueil extends CI_Controller
 
 		$this->load->helper('url'); // base url
 
+		$data['titre'] = "Blog groupe 3"; // nom de la page
+
 		$this->load->view('header', $data); // menu
 		$this->load->view('accueil_site', $bdd); // accueil
 	}
+
+	/**
+	 * Appel le controller de connexion
+	 */
+	public function connexion()
+	{
+		$controller = new Connexion();
+		$controller->index();
+	}
+
+	public function creacompte()
+	{
+		echo 'en cours';
+	}
+
+	public function newarticle()
+	{
+		echo 'en cours';
+	}
+
+	public function mesarticles()
+	{
+		echo 'en cours';
+	}
+
 }

@@ -21,4 +21,8 @@ class Data_request extends CI_Model {
 		return $query->result_array();
 	}
 
+	function connexion() {
+		$this->load->view('connexion_page');
+	}
+
 }
