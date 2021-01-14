@@ -3,16 +3,20 @@
 
 class Article extends CI_Model
 {
+	private $ref = null;
+
+	public function __construct()
+	{
+		$this->load->database();
+	}
 
 	/**
 	 * Trouve dans la bd, les articles publier
 	 *
 	 * @return mixed Retourne une liste des articles publier
 	 */
-	function getArticlesAccueil($theme)
+	public function getArticlesAccueil($theme)
 	{
-		$this->load->database();
-
 		if ($theme == 'all') { // si tout theme selectionner
 			$query = $this->db->query("SELECT * FROM Article WHERE etat_Publi = 'publier'");
 		} else { // si theme particulier
@@ -24,9 +28,26 @@ class Article extends CI_Model
 		return $query->result_array();
 	}
 
-	function connexion()
+	public function getArticle($ref)
 	{
-		$this->load->view('connexion_page');
+		$sql = 'SELECT * FROM Article WHERE ref_Article = ?';
+		$query = $this->db->query($sql, array($ref));
+		return $query->first_row('array');
 	}
 
+	public function deleteArticle($ref)
+	{
+
+	}
+
+	public function setEtatArticle($etat, $ref)
+	{
+		echo $ref;
+		$etat = filter_var($etat, FILTER_SANITIZE_STRING);
+		$ref = filter_var($ref, FILTER_SANITIZE_STRING);
+		echo $ref;
+
+		$sql = 'UPDATE Article SET etat_Publi = ? WHERE ref_Article = ?';
+		$this->db->query($sql, array($etat, $ref));
+	}
 }

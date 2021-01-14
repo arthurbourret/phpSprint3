@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -57,6 +57,10 @@ $route['deconnexion'] = 'Connexion/deconnexion';
 
 $route['crea-compte'] = 'Compte';
 $route['validcompte'] = 'Compte/validcompte';
+
+$route['newarticle'] = 'Nouvarticle';
+
+$route['mesarticles'] = 'Mesarticles';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

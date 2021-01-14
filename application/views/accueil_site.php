@@ -20,7 +20,7 @@ foreach ($request as $row) {
 	"<div class='container' >
         <div class='item thematique'>$titre</div>
         <div class='item article title'>$resume</div>
-        <a href='PageArticle.php?id_ref=$ref'>Consulter l'article</a>
+        <a href='" . BASE_URL . INDEX . "/Accueil/articlepage?id_ref=$ref'>Consulter l'article</a>
     </div>";
 }
 

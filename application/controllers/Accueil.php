@@ -11,14 +11,9 @@ class Accueil extends CI_Controller
 	 */
 	public function index()
 	{
-		session_start();
-
-		$this->load->model('article'); // la database
+		$data = $this->set_data(); // recup connexion
 
 		$data['titre'] = "Blog groupe 3"; // nom de la page
-		if (isset($_SESSION['login']))
-			$data['log'] = $_SESSION['login'];
-		else $data['log'] = null;
 
 		if (!isset($_POST['theme'])) // le theme des articles a charger
 			$theme = "all";
@@ -33,14 +28,58 @@ class Accueil extends CI_Controller
 		$this->load->view('footer'); // bas de page
 	}
 
-	public function newarticle()
+	public function set_data()
 	{
-		echo 'en cours';
+		session_start(); // session
+		$this->load->model('article'); // la database
+
+		if (isset($_SESSION['login']))
+			$data['log'] = $_SESSION['login'];
+		else $data['log'] = null;
+
+		return $data;
 	}
 
-	public function mesarticles()
+	public function articlepage()
 	{
-		echo 'en cours';
+		$ref_article = $this->input->get('id_ref'); // recupere id de l'article
+
+		$this->load->model('article'); // charge model
+		$article = $this->article->getArticle($ref_article); // charge donnees de l'article
+
+		$data = $this->set_data(); // recup connexion
+
+		$data['titre'] = $article['titre']; // nom de la page
+
+		$this->load->helper('url'); // base url
+
+		$this->load->view('header', $data); // menu
+		$this->load->view('article_page', $article); // accueil
+		$this->load->view('footer'); // bas de page
+	}
+
+	public function deleteArticle($ref_Article)
+	{
+		$this->load->model('article'); // charge model
+		$this->article->deleteArticle($ref_Article);
+	}
+
+	public function publierArticle($ref_Article)
+	{
+		$this->changeEtat('publier', $ref_Article);
+	}
+
+	public function archiverArticle($ref_Article)
+	{
+		$this->changeEtat('archiver', $ref_Article);
+	}
+
+	private function changeEtat($etat, $ref_Article)
+	{
+		$this->load->model('article'); // charge model
+		$this->article->setEtatArticle($etat, $ref_Article);
+
+		header('Location: ../articlepage?id_ref=' . $ref_Article); // revient a la page
 	}
 
 }
