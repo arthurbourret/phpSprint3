@@ -1,0 +1,52 @@
+.titreCo{
+    position: absolute;
+    margin-left: 35%;
+    font-family: "Calibri Light";
+    font-size: 30px;
+    margin-top: 90px;
+}
+
+.saisie{
+    width: 400px;
+    height: 40px;
+    position: absolute;
+    font-family: "Calibri Light";
+    border-color: #D47B36;
+    border-radius: 15px;
+}
+
+.log {
+    margin-top: 200px;
+    margin-left: 50px;
+}
+
+.pass {
+    margin-top: 275px;
+    margin-left: 50px;
+}
+
+.verif {
+    margin-top: 330px;
+    margin-left: 50px;
+}
+
+.bouton {
+    margin-top: 450px;
+    margin-left: 200px;
+}
+
+.creercompe {
+    margin-top: 430px;
+    margin-left: 120px;
+}
+
+.connexion{
+    position: absolute;
+    height: 650px;
+    width: 500px;
+    margin-top: 20px;
+    margin-left: 100px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 3px #000000;
+    border-radius: 15px;
+}

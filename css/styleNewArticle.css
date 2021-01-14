@@ -1,0 +1,52 @@
+.container {
+    display: grid;
+    width:50vw;
+    height:40vw;
+    grid-gap: 8px;
+    margin-bottom: 50px;
+    grid-template-columns: 25% 75%;
+    grid-template-rows: 10% 15% 15% 60%;
+}
+
+.item {
+    background-color: #D9A45E;
+    border-radius: 7px;
+    font-size: 25px;
+    padding: 10px;
+}
+
+.item:hover {
+    background-color: #D47B36;
+}
+
+.nav {
+    grid-column: 1;
+    grid-row: 4;
+}
+
+.meta {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.mot_cle {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.article {
+    grid-column: 2/-1;
+    background-color: #D0DFC7;
+}
+
+.article:hover {
+    background-color: #E0EFD7;
+}
+
+.title {
+    grid-row: 1;
+}
+
+.content {
+    grid-row: 2/-1;
+}
