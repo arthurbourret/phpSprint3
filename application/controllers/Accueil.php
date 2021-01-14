@@ -30,6 +30,7 @@ class Accueil extends CI_Controller
 
 		$this->load->view('header', $data); // menu
 		$this->load->view('accueil_site', $bdd); // accueil
+		$this->load->view('footer'); // bas de page
 	}
 
 	public function newarticle()

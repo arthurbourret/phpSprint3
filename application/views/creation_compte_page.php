@@ -1,4 +1,4 @@
-<form method="post" action="validcompte">
+<form method="post" action="<?php echo BASE_URL . INDEX . '/'?>validcompte">
 
 	<div class="connexion">
 		<p class="titreCo">CREATION DE COMPTE</p>
@@ -11,7 +11,3 @@
 	</div>
 
 </form>
-
-</body>
-
-</html>

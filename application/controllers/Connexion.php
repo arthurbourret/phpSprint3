@@ -17,20 +17,22 @@ class Connexion extends CI_Controller
 
 		$this->load->view('header', $data);
 		$this->load->view('connexion_page');
+		$this->load->view('footer'); // bas de page
 	}
 
 	public function applyconnexion()
 	{
-		$login = $_POST['login'];
-		$pass = $_POST['password'];
+		$login = $this->input->post('login');
+		$pass = $this->input->post('password');
 
 		$this->load->model('utilisateur');
 
 		if ($this->utilisateur->getAuth($login, $pass)) {
 			// connexion reussie
-			$_SESSION['login'] = $this->utilisateur->getLogin();
+			session_start();
+			$_SESSION['login'] = $login; // connecte user
 
-			header('Location: ../'); // go to accueil
+			header('Location: ../'); // retourne a l'accueil
 		} else {
 			// connexion echoue
 			$this->index();

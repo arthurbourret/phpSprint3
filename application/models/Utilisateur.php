@@ -11,10 +11,6 @@ class Utilisateur extends CI_Model
 		$this->load->database();
 	}
 
-	public function getLogin() {
-		return $this->login;
-	}
-
 	/**
 	 * Permet de valider un couple (login,pass) auprès d'une base de données.
 	 *
@@ -35,14 +31,13 @@ class Utilisateur extends CI_Model
 			$result = $query->result_array();
 			// requete et fetch sql
 
-			foreach ($result as $row) {
-				if (!is_null($row['login'])) { // check only first row
-					$this->login = $login;
-					return true;
-				} else {
-					$this->login = null;
-					return false;
-				}
+			$row = $query->first_row('array');
+			if (!is_null($row['login'])) {
+				$this->login = $login;
+				return true;
+			} else {
+				$this->login = null;
+				return false;
 			}
 		}
 	}
@@ -57,30 +52,16 @@ class Utilisateur extends CI_Model
 	 */
 	public function createUser($login, $password)
 	{
-
-		include_once('../config/DB.inc.php');
-
-		$db = new PDO(
-			"mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8",
-			DB_USER,
-			DB_PASS
-		);
-
 		$login = filter_var($login, FILTER_SANITIZE_STRING);
-		$pass = filter_var($password, FILTER_SANITIZE_STRING);
+		$password = filter_var($password, FILTER_SANITIZE_STRING);
 
-		$sql = "SELECT count(*) FROM SITE_User WHERE login = '$login'";
+		// verifie si n y a pas deja un user
+		if (!$this->getAuth($login, $password)) {
+			$this->db->insert('SITE_User', array("login" => $login, "pass" => $password));
+			// insertion des donnees
 
-		if ($db->exec($sql) == 0) {
-			$sql = "INSERT INTO SITE_User VALUES ('$login', '$pass')";
-			if ($db->exec($sql)) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
+			return $this->getAuth($login, $password); // verifie ajout
+		} else return false;
 	}
 
 	/**

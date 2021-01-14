@@ -12,6 +12,3 @@
 	</div>
 
 </form>
-
-</body>
-</html>

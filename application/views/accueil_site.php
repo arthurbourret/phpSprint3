@@ -25,7 +25,3 @@ foreach ($request as $row) {
 }
 
 ?>
-
-</body>
-
-</html>
