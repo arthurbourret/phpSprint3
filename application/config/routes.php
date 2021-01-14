@@ -59,8 +59,7 @@ $route['crea-compte'] = 'Compte';
 $route['validcompte'] = 'Compte/validcompte';
 
 $route['newarticle'] = 'Nouvarticle';
-$route['publier'] = 'Nouvarticle/publier';
-$route['brouillon'] = 'Nouvarticle/brouillon';
+$route['ajout_article'] = 'Nouvarticle/addNewArticle';
 
 $route['mesarticles'] = 'Mesarticles';
 

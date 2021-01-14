@@ -29,19 +29,28 @@ class Nouvarticle extends CI_Controller
 		return $data;
 	}
 
-	public function publier()
+	public function addNewArticle()
 	{
-		$this->addNewArticle('publier');
-	}
+		$titre = $this->input->post('titre');
+		$theme = $this->input->post('theme');
+		$resume = $this->input->post('resume');
+		$text = $this->input->post('corps_arcticle');
 
-	public function brouillon()
-	{
-		$this->addNewArticle('brouillon');
-	}
+		session_start();
+		$auteur = $_SESSION['login'];
+		$etat = $this->input->post('etat');
 
-	private function addNewArticle($etat)
-	{
-		echo $etat;
+		if (!empty($titre) && !empty($theme) && !empty($resume) && !empty($text)) {
+			// si article complet
+			$this->load->model('article');
+			$this->article->addArticle($titre, $theme, $resume, $text, $auteur, $etat);
+
+			$this->load->helper('url');
+			header('Location: ' . base_url()); // revient a la page
+		} else {
+			$this->load->helper('url');
+			header('Location: ' . base_url() . index_page() . '/newarticle'); // revien a la creation d'article
+		}
 	}
 
 }
