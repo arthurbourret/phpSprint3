@@ -3,7 +3,6 @@
 
 class Article extends CI_Model
 {
-	private $ref = null;
 
 	public function __construct()
 	{
