@@ -11,34 +11,25 @@ class Accueil extends CI_Controller
 	 */
 	public function index()
 	{
-		$this->load->model('data_request'); // la database
+		session_start();
+
+		$this->load->model('article'); // la database
+
+		$data['titre'] = "Blog groupe 3"; // nom de la page
+		if (isset($_SESSION['login']))
+			$data['log'] = $_SESSION['login'];
+		else $data['log'] = null;
 
 		if (!isset($_POST['theme'])) // le theme des articles a charger
 			$theme = "all";
 		else
 			$theme = $_POST['theme'];
-		$bdd['request'] = $this->data_request->getArticlesAccueil($theme); // les articles avec un theme
+		$bdd['request'] = $this->article->getArticlesAccueil($theme); // les articles avec un theme
 
 		$this->load->helper('url'); // base url
 
-		$data['titre'] = "Blog groupe 3"; // nom de la page
-
 		$this->load->view('header', $data); // menu
 		$this->load->view('accueil_site', $bdd); // accueil
-	}
-
-	/**
-	 * Appel le controller de connexion
-	 */
-	public function connexion()
-	{
-		$controller = new Connexion();
-		$controller->index();
-	}
-
-	public function creacompte()
-	{
-		echo 'en cours';
 	}
 
 	public function newarticle()

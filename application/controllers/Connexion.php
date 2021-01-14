@@ -25,12 +25,30 @@ class Connexion extends CI_Controller
 		$pass = $_POST['password'];
 
 		$this->load->model('utilisateur');
-		$this->load->model('data_request');
 
 		if ($this->utilisateur->getAuth($login, $pass)) {
-			$this->index();
-		} else $this->connexion();
+			// connexion reussie
+			$_SESSION['login'] = $this->utilisateur->getLogin();
 
+			header('Location: ../'); // go to accueil
+		} else {
+			// connexion echoue
+			$this->index();
+
+			// TODO rajoute message erreur de connexion
+		}
+	}
+
+	public function deconnexion()
+	{
+		session_start ();
+		if (isset($_SESSION['login'])){
+
+			session_unset ();
+			session_destroy ();
+
+			header('Location: ../'); // go to accueil
+		}
 	}
 
 }

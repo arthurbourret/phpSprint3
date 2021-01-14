@@ -29,20 +29,18 @@ define('INDEX', index_page());
 
 		$url_pages = BASE_URL . INDEX . '/';
 
-		if (!isset($_SESSION['login'])) { // pour se connecter
+		if (!isset($log)) { // pour se connecter
 			echo "<a href='" . $url_pages . "connexion'>Connexion</a>
                   <a href='" . $url_pages . "crea-compte'>Créer un compte</a>";
 
 		} else { // si connecter
-
-			$log = $_SESSION['login'];
 
 			echo "<a href='" . $url_pages . "newarticle'>Nouvel article</a>
                   <a href='" . $url_pages . "mesarticles'>Mes articles</a>
                   
                   <a class='connect'
                     <p>Utilisateur : $log</p>
-                    <form action='' method=''>
+                    <form action='" . $url_pages . "deconnexion' method=''>
                         <input class='deco_submit' type='submit' value='Déconnexion'>
                     </form>
                   </a>";

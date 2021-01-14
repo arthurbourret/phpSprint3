@@ -51,9 +51,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'Accueil';
 
-$route['connexion'] = 'Connexion/index';
+$route['connexion'] = 'Connexion';
 $route['applyconnexion'] = 'Connexion/applyconnexion';
-$route['crea-compte'] = 'Accueil/creacompte';
+$route['deconnexion'] = 'Connexion/deconnexion';
+
+$route['crea-compte'] = 'Compte';
+$route['validcompte'] = 'Compte/validcompte';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
