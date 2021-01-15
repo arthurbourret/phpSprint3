@@ -21,6 +21,7 @@ class Mesarticles extends CI_Controller
 		if (!isset($_POST['etat']))
 			$etat = "all";
 		else $etat = $this->input->post('etat');
+		$this->load->model('article'); // charge model
 		$bdd['request'] = $this->article->getMesArticles($theme, $etat, $data['log']); // les articles avec un theme
 
 		$this->load->helper('url'); // base url
@@ -30,14 +31,16 @@ class Mesarticles extends CI_Controller
 		$this->load->view('footer'); // bas de page
 	}
 
+	/**
+	 * @return mixed Retourne le login de l'utilisateur dans un array
+	 */
 	private function set_data()
 	{
 		session_start(); // session
-		$this->load->model('article'); // la database
 
-		if (isset($_SESSION['login']))
-			$data['log'] = $_SESSION['login'];
-		else $data['log'] = null;
+		if (isset($_SESSION['login'])) // regarde s'il y a un login
+			$data['log'] = $_SESSION['login']; // recupere le login
+		else $data['log'] = null; // ne recupere pas le login
 
 		return $data;
 	}

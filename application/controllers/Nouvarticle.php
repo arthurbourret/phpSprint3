@@ -36,6 +36,9 @@ class Nouvarticle extends CI_Controller
 		return $data;
 	}
 
+	/**
+	 * Ajoute un nouvel article a la base de donnees
+	 */
 	public function addNewArticle()
 	{
 		$titre = $this->input->post('titre');
@@ -43,19 +46,19 @@ class Nouvarticle extends CI_Controller
 		$resume = $this->input->post('resume');
 		$text = $this->input->post('corps_arcticle');
 
-		session_start();
-		$auteur = $_SESSION['login'];
+		session_start(); // session
+		$auteur = $_SESSION['login']; // recupere l'auteur
 		$etat = $this->input->post('etat');
 
+		$this->load->helper('url'); // charge url
 		if (!empty($titre) && !empty($theme) && !empty($resume) && !empty($text)) {
 			// si article complet
-			$this->load->model('article');
+			$this->load->model('article'); // charge model
 			$this->article->addArticle($titre, $theme, $resume, $text, $auteur, $etat);
+			// ajoute l'article
 
-			$this->load->helper('url');
-			header('Location: ' . base_url()); // revient a la page
+			header('Location: ' . base_url()); // revient a la page d'accueil
 		} else {
-			$this->load->helper('url');
 			header('Location: ' . base_url() . index_page() . '/newarticle'); // revien a la creation d'article
 		}
 	}

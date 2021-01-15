@@ -6,6 +6,9 @@ class Utilisateur extends CI_Model
 
 	protected $login = null;
 
+	/**
+	 * Utilisateur constructor. charge la base de donnees
+	 */
 	public function __construct()
 	{
 		$this->load->database();
@@ -22,21 +25,20 @@ class Utilisateur extends CI_Model
 	public function getAuth($login, $password)
 	{
 		if (!is_null($login) && !is_null($password)) {
+			// si les params ne sont pas vide
 
-			$login = filter_var($login, FILTER_SANITIZE_STRING);
-			$pass = filter_var($password, FILTER_SANITIZE_STRING);
+			$login = filter_var($login, FILTER_SANITIZE_STRING); // filtre login
+			$password = filter_var($password, FILTER_SANITIZE_STRING); // filtre pass
 
-			$sql = 'SELECT * FROM SITE_User WHERE login = ? AND pass = ?';
-			$query = $this->db->query($sql, array($login, $password));
-			$result = $query->result_array();
-			// requete et fetch sql
+			$sql = 'SELECT * FROM SITE_User WHERE login = ? AND pass = ?'; // requete
+			$query = $this->db->query($sql, array($login, $password)); // lance la requete
 
-			$row = $query->first_row('array');
-			if (!is_null($row['login'])) {
-				$this->login = $login;
+			$row = $query->first_row('array'); // verifie 1er resultat
+			if (!is_null($row['login'])) { // verifie que le resultat n'est pas nul
+				$this->login = $login; // instancie login
 				return true;
 			} else {
-				$this->login = null;
+				$this->login = null; // desinstancie login
 				return false;
 			}
 		}
@@ -52,8 +54,8 @@ class Utilisateur extends CI_Model
 	 */
 	public function createUser($login, $password)
 	{
-		$login = filter_var($login, FILTER_SANITIZE_STRING);
-		$password = filter_var($password, FILTER_SANITIZE_STRING);
+		$login = filter_var($login, FILTER_SANITIZE_STRING); // filtre login
+		$password = filter_var($password, FILTER_SANITIZE_STRING); // filtre pass
 
 		// verifie si n y a pas deja un user
 		if (!$this->getAuth($login, $password)) {
@@ -62,43 +64,6 @@ class Utilisateur extends CI_Model
 
 			return $this->getAuth($login, $password); // verifie ajout
 		} else return false;
-	}
-
-	/**
-	 * Permet de modifier les données d'un utilisateur existant dans la base de données.
-	 * (l'utilisateur mis à jour est celui préalablement connecté)
-	 *
-	 * @param string $password le mot de passe à mettre à jour.
-	 *
-	 * @return boolean selon que la mise à jour est ok ou pas.
-	 */
-	public function updateUser($password)
-	{
-
-		include_once('../config/DB.inc.php');
-
-		$db = new PDO(
-			"mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8",
-			DB_USER,
-			DB_PASS
-		);
-
-		$maj = "";
-		$virgule = "";
-
-		if (!is_null($password)) {
-			$pass = filter_var($password, FILTER_SANITIZE_STRING);
-			$maj .= $virgule . "pass='$pass'";
-			$virgule = ", ";
-		}
-
-		$sql = "UPDATE SITE_User SET " . $maj . " WHERE login = '$this->login'";
-
-		if ($db->exec($sql)) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 }

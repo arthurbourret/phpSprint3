@@ -11,7 +11,7 @@
 
 <?php
 
-foreach ($request as $row) {
+foreach ($request as $row) { // pour chaque article
 	$ref = $row["ref_Article"];
 	$titre = $row["titre"];
 	$resume = $row["resume"];
