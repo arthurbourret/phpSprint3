@@ -16,9 +16,10 @@ class Accueil extends CI_Controller
 		$data['titre'] = "Blog groupe 3"; // nom de la page
 
 		if (!isset($_POST['theme'])) // le theme des articles a charger
-			$theme = "all";
+			$theme = "all"; // theme de base
 		else
-			$theme = $_POST['theme'];
+			$theme = $_POST['theme']; // theme particulier
+		$this->load->model('article'); // chargement du modele
 		$bdd['request'] = $this->article->getArticlesAccueil($theme); // les articles avec un theme
 
 		$this->load->helper('url'); // base url
@@ -28,18 +29,23 @@ class Accueil extends CI_Controller
 		$this->load->view('footer'); // bas de page
 	}
 
+	/**
+	 * @return mixed Retourne le login de l'utilisateur dans un array
+	 */
 	private function set_data()
 	{
 		session_start(); // session
-		$this->load->model('article'); // la database
 
-		if (isset($_SESSION['login']))
-			$data['log'] = $_SESSION['login'];
-		else $data['log'] = null;
+		if (isset($_SESSION['login'])) // regarde s'il y a un login
+			$data['log'] = $_SESSION['login']; // recupere le login
+		else $data['log'] = null; // ne recupere pas le login
 
 		return $data;
 	}
 
+	/**
+	 * Affiche un article particulier (quand on clique sur lire l'article)
+	 */
 	public function articlepage()
 	{
 		$ref_article = $this->input->get('id_ref'); // recupere id de l'article
@@ -58,29 +64,50 @@ class Accueil extends CI_Controller
 		$this->load->view('footer'); // bas de page
 	}
 
+	/**
+	 * Supprime un article
+	 *
+	 * @param $ref_Article La reference de l'article a supprimer
+	 */
 	public function deleteArticle($ref_Article)
 	{
 		$this->load->model('article'); // charge model
-		$this->article->deleteArticle($ref_Article);
+		$this->article->deleteArticle($ref_Article); // appele la methode pour delete
 
-		$this->load->helper('url');
+		$this->load->helper('url'); // charge les url
 		header('Location: ' . base_url()); // revient a la page
 	}
 
+	/**
+	 * Change le statut de l'article sur publier
+	 *
+	 * @param $ref_Article La reference de l'article
+	 */
 	public function publierArticle($ref_Article)
 	{
 		$this->changeEtat('publier', $ref_Article);
 	}
 
+	/**
+	 * Change le statut de l'article sur archiver
+	 *
+	 * @param $ref_Article La reference de l'article
+	 */
 	public function archiverArticle($ref_Article)
 	{
 		$this->changeEtat('archiver', $ref_Article);
 	}
 
+	/**
+	 * Change l'etat d'un article
+	 *
+	 * @param $etat L'etat sur lequel changer
+	 * @param $ref_Article La reference de l'article
+	 */
 	private function changeEtat($etat, $ref_Article)
 	{
 		$this->load->model('article'); // charge model
-		$this->article->setEtatArticle($etat, $ref_Article);
+		$this->article->setEtatArticle($etat, $ref_Article); // appel la methode pour changer
 
 		header('Location: ../articlepage?id_ref=' . $ref_Article); // revient a la page
 	}

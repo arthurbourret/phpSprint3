@@ -4,6 +4,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Mesarticles extends CI_Controller
 {
 
+	/**
+	 * Method qui charge l'index a la page indique dans view
+	 *
+	 * Est la methode appelee sur la page des articles de l'utilisateur
+	 */
 	public function index()
 	{
 		$data = $this->set_data(); // recup connexion

@@ -4,6 +4,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Nouvarticle extends CI_Controller
 {
 
+	/**
+	 * Method qui charge l'index a la page indique dans view
+	 *
+	 * Est la methode appelee sur la page de creation d'un article
+	 */
 	public function index()
 	{
 		$data = $this->set_data(); // recup connexion
@@ -17,14 +22,16 @@ class Nouvarticle extends CI_Controller
 		$this->load->view('footer'); // bas de page
 	}
 
+	/**
+	 * @return mixed Retourne le login de l'utilisateur dans un array
+	 */
 	private function set_data()
 	{
 		session_start(); // session
-		$this->load->model('article'); // la database
 
-		if (isset($_SESSION['login']))
-			$data['log'] = $_SESSION['login'];
-		else $data['log'] = null;
+		if (isset($_SESSION['login'])) // regarde s'il y a un login
+			$data['log'] = $_SESSION['login']; // recupere le login
+		else $data['log'] = null; // ne recupere pas le login
 
 		return $data;
 	}
